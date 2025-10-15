@@ -2,23 +2,69 @@
 flask==2.3.3
 flask-cors==4.0.0
 flask-sqlalchemy==3.0.5
+flask-migrate==4.0.5
 
 # Database
+# psycopg2-binary==2.9.7  # Removed for Vercel compatibility
 sqlalchemy==2.0.21
 
-# Basic Dependencies
+# Vulnerability Scanners Integration
+python-nmap==0.7.1
 requests==2.31.0
+xmltodict==0.13.0
 beautifulsoup4==4.12.2
 
-# AI & Basic LangChain
+# AI & LangChain Integration
+langchain==0.0.350
+langchain-google-genai==1.0.8
 google-generativeai==0.3.2
+chromadb==0.4.15
+sentence-transformers==2.2.2
+faiss-cpu==1.8.0
+
+# Vector Store & Embeddings
+tiktoken==0.5.1
+openai==1.3.5
+transformers==4.35.2
 
 # Data Processing
 pandas==2.1.3
 numpy==1.24.3
+jsonschema==4.19.2
+pydantic==2.4.2
+
+# Security & Crypto
+cryptography==41.0.7
+bcrypt==4.0.1
+python-jose==3.3.0
+
+# HTTP & API
+httpx==0.25.2
+aiohttp==3.8.6
+uvicorn==0.24.0
+
+# Threat Intelligence
+pymisp==2.4.175
+stix2==3.0.1
 
 # Report Generation
+reportlab==4.0.7
 jinja2==3.1.2
+networkx==3.2.1
 
 # Utilities
 python-dotenv==1.0.0
+celery==5.3.4
+redis==5.0.1
+schedule==1.2.0
+click==8.1.7
+
+# Development & Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.10.1
+flake8==6.1.0
+
+# Documentation
+sphinx==7.2.6
+sphinx-rtd-theme==1.3.0
