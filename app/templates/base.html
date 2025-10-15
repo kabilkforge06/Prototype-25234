@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}National Cybersecurity Operations Center{% endblock %}</title>
+    <meta name="description" content="Government-Grade Centralized Vulnerability Detection & Response Platform">
+    <meta name="classification" content="UNCLASSIFIED//FOR OFFICIAL USE ONLY">
+
+    <!-- Government Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+    <!-- Bootstrap CSS (Government Style) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Professional Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <!-- Data Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.44.0/dist/apexcharts.min.js"></script>
+
+    <!-- Government Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Government CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block head %}{% endblock %}
+</head>
+<body class="d-flex flex-column h-100 bg-light-gray">
+    <!-- Classification Banner -->
+    <div class="classification-banner bg-success text-white text-center py-1">
+        <small><i class="fas fa-shield-alt me-1"></i> UNCLASSIFIED//FOR OFFICIAL USE ONLY</small>
+    </div>
+    <!-- Professional Government Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-government-navy shadow-sm">
+        <div class="container-fluid">
+            <!-- Agency Branding -->
+            <div class="navbar-brand d-flex align-items-center">
+                <div class="agency-seal me-3">
+                    <i class="fas fa-shield-halved fs-2 text-gold"></i>
+                </div>
+                <div>
+                    <div class="brand-title">NCVD</div>
+                    <div class="brand-subtitle">National Cybersecurity Vulnerability Detection</div>
+                </div>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Main Navigation -->
+            <div class="collapse navbar-collapse" id="mainNavigation">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-tachometer-alt me-2"></i>Operations Center
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="{{ url_for('index') }}"><i class="fas fa-home me-2"></i>Executive Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('index') }}"><i class="fas fa-chart-line me-2"></i>Threat Analytics</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('index') }}"><i class="fas fa-clock me-2"></i>Real-time Monitor</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-search-plus me-2"></i>Vulnerability Mgmt
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="{{ url_for('scan_page') }}"><i class="fas fa-radar-chart me-2"></i>Active Scans</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('scan_page') }}"><i class="fas fa-bug me-2"></i>Vulnerability Registry</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('scan_page') }}"><i class="fas fa-clipboard-list me-2"></i>Risk Assessment</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="{{ url_for('chat_page') }}">
+                            <i class="fas fa-robot me-2"></i>AI Analyst
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-file-alt me-2"></i>Intelligence
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-globe me-2"></i>Threat Intelligence</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-database me-2"></i>CVE Database</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="{{ url_for('reports_page') }}">
+                            <i class="fas fa-chart-bar me-2"></i>Reports
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- User Profile & System Status -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item me-3">
+                        <div class="nav-link text-light d-flex align-items-center">
+                            <div class="status-indicator online me-2"></div>
+                            <small class="text-muted">System: <span class="text-success fw-semibold">OPERATIONAL</span></small>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-shield me-2"></i>Agent Smith
+                            <span class="badge bg-gold text-dark ms-2">TS/SCI</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
+                            <li><h6 class="dropdown-header">Security Clearance: TOP SECRET//SCI</h6></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-history me-2"></i>Audit Log</a></li>
+                            <li><a class="dropdown-item text-warning" href="#"><i class="fas fa-sign-out-alt me-2"></i>Secure Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb Navigation -->
+    <nav class="bg-light border-bottom px-4 py-2">
+        <div class="container-fluid">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}" class="text-government-navy"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item active">{% block breadcrumb %}Operations Dashboard{% endblock %}</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow-1 bg-light">
+        <div class="container-fluid p-4">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Government Footer -->
+    <footer class="bg-government-navy text-light py-4 border-top border-3 border-gold">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="d-flex align-items-center mb-2 mb-lg-0">
+                        <i class="fas fa-shield-halved text-gold me-3 fs-4"></i>
+                        <div>
+                            <div class="fw-bold">National Cybersecurity Vulnerability Detection (NCVD)</div>
+                            <small class="text-light-gray">Department of Cybersecurity & Infrastructure Protection</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row text-center text-lg-end">
+                        <div class="col-12 mb-2">
+                            <span class="badge bg-success me-1"><i class="fas fa-brain me-1"></i>AI-Powered</span>
+                            <span class="badge bg-primary me-1"><i class="fas fa-shield-alt me-1"></i>Secure</span>
+                            <span class="badge bg-warning text-dark me-1"><i class="fas fa-clock me-1"></i>24/7</span>
+                            <span class="badge bg-info"><i class="fas fa-globe me-1"></i>Enterprise</span>
+                        </div>
+                        <div class="col-12">
+                            <small class="text-muted">
+                                Powered by: Advanced AI Analytics | Multi-Source Intelligence | Real-Time Processing
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-gold my-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <small class="text-muted">
+                        &copy; 2025 Government Cybersecurity Operations | All Rights Reserved<br>
+                        <strong>Classification:</strong> UNCLASSIFIED//FOR OFFICIAL USE ONLY
+                    </small>
+                </div>
+                <div class="col-md-6 text-end">
+                    <small class="text-muted">
+                        <i class="fas fa-clock me-1"></i>System Time: <span id="systemTime"></span><br>
+                        <i class="fas fa-server me-1"></i>Status: <span class="text-success fw-semibold">OPERATIONAL</span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Session Timeout Warning Modal -->
+    <div class="modal fade" id="sessionWarningModal" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content bg-warning text-dark">
+                <div class="modal-header border-0 pb-0">
+                    <h6 class="modal-title fw-bold"><i class="fas fa-clock me-2"></i>Session Warning</h6>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-2">Your session will expire in <span id="timeoutCounter" class="fw-bold">5</span> minutes.</p>
+                    <button type="button" class="btn btn-dark btn-sm w-100" data-bs-dismiss="modal">
+                        <i class="fas fa-refresh me-1"></i>Extend Session
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Government Base Functionality -->
+    <script>
+        // System Clock Update
+        function updateSystemTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('en-US', {
+                timeZone: 'UTC',
+                hour12: false,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            }) + ' UTC';
+            document.getElementById('systemTime').textContent = timeString;
+        }
+        
+        // Update time every second
+        setInterval(updateSystemTime, 1000);
+        updateSystemTime(); // Initial call
+        
+        // Session timeout warning (25 minutes warning for 30-minute sessions)
+        let sessionTimer = setTimeout(() => {
+            const modal = new bootstrap.Modal(document.getElementById('sessionWarningModal'));
+            modal.show();
+            
+            let countdown = 5;
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                document.getElementById('timeoutCounter').textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    // In a real app, this would redirect to logout
+                    console.log('Session expired - would redirect to logout');
+                }
+            }, 60000); // Update every minute
+        }, 25 * 60 * 1000); // 25 minutes
+        
+        // Classification banner functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Disable right-click context menu for security
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            
+            // Add keyboard shortcuts for government users
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+Shift+H for help
+                if (e.ctrlKey && e.shiftKey && e.key === 'H') {
+                    e.preventDefault();
+                    console.log('Help system activated');
+                }
+            });
+        });
+    </script>
+
+    <!-- Custom Government JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    {% block scripts %}{% endblock %}
+
+    <!-- Bottom Classification Banner -->
+    <div class="classification-banner bg-success text-white text-center py-1 position-fixed bottom-0 w-100" style="z-index: 1020;">
+        <small><i class="fas fa-shield-alt me-1"></i> UNCLASSIFIED//FOR OFFICIAL USE ONLY</small>
+    </div>
+</body>
+</html>

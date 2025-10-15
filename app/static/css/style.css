@@ -1,0 +1,809 @@
+/* 
+ * GOVERNMENT-GRADE UI STYLESHEET
+ * National Cybersecurity Vulnerability Detection Platform
+ * Classification: UNCLASSIFIED//FOR OFFICIAL USE ONLY
+ */
+
+:root {
+    /* Government Color Palette */
+    --government-navy: #1B365D;          /* Primary Authority Color */
+    --government-deep-gray: #2D3748;     /* Secondary Professional */
+    --government-gold: #F6AD55;          /* Government Standard Accent */
+    --government-light-gold: #FED7AA;    /* Light Accent */
+    
+    /* Threat Level Colors (NIST Standard) */
+    --threat-critical: #DC2626;          /* Critical - Red */
+    --threat-high: #EA580C;             /* High - Orange */
+    --threat-medium: #D97706;           /* Medium - Amber */
+    --threat-low: #059669;              /* Low - Green */
+    --threat-info: #2563EB;             /* Info - Blue */
+    
+    /* System Status Colors */
+    --status-operational: #10B981;      /* Green - All Systems Go */
+    --status-degraded: #F59E0B;         /* Yellow - Degraded Performance */
+    --status-offline: #EF4444;          /* Red - System Down */
+    
+    /* Professional Grays */
+    --gray-50: #F9FAFB;
+    --gray-100: #F3F4F6;
+    --gray-200: #E5E7EB;
+    --gray-300: #D1D5DB;
+    --gray-400: #9CA3AF;
+    --gray-500: #6B7280;
+    --gray-600: #4B5563;
+    --gray-700: #374151;
+    --gray-800: #1F2937;
+    --gray-900: #111827;
+    
+    /* Typography */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-secondary: 'Source Sans Pro', sans-serif;
+    --font-mono: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    
+    /* Spacing & Layout */
+    --border-radius-sm: 0.375rem;
+    --border-radius: 0.5rem;
+    --border-radius-lg: 0.75rem;
+    --border-radius-xl: 1rem;
+    
+    /* Shadows (Government Standard) */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* =============================================
+ * BASE GOVERNMENT STYLING
+ * ============================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--gray-800);
+    background-color: var(--gray-50);
+    letter-spacing: -0.01em;
+}
+
+/* Government Color Classes */
+.bg-government-navy { background-color: var(--government-navy) !important; }
+.bg-government-gold { background-color: var(--government-gold) !important; }
+.bg-light-gray { background-color: var(--gray-100) !important; }
+.text-government-navy { color: var(--government-navy) !important; }
+.text-gold { color: var(--government-gold) !important; }
+.text-light-gray { color: var(--gray-400) !important; }
+.border-gold { border-color: var(--government-gold) !important; }
+
+/* =============================================
+ * NAVIGATION & BRANDING
+ * ============================================= */
+
+.navbar {
+    padding: 0.75rem 0;
+    border-bottom: 3px solid var(--government-gold);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand {
+    padding: 0;
+}
+
+.brand-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--government-gold);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.8);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+}
+
+.agency-seal {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--government-gold), var(--government-light-gold));
+    border-radius: 50%;
+    box-shadow: var(--shadow-lg);
+}
+
+.nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.2s ease;
+    border-radius: var(--border-radius-sm);
+}
+
+.nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--government-gold) !important;
+}
+
+/* Status Indicator */
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-indicator.online {
+    background-color: var(--status-operational);
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    font-size: 1.2rem;
+    color: var(--gray-400);
+}
+
+/* =============================================
+ * CLASSIFICATION BANNERS
+ * ============================================= */
+
+.classification-banner {
+    background: linear-gradient(90deg, var(--status-operational) 0%, #059669 100%);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    z-index: 1030;
+}
+
+/* =============================================
+ * CARDS & COMPONENTS
+ * ============================================= */
+
+.card {
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    background-color: white;
+    transition: all 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+    border-bottom: 2px solid var(--gray-200);
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0 !important;
+    padding: 1rem 1.5rem;
+}
+
+.card-title {
+    font-weight: 700;
+    color: var(--government-navy);
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Government Stats Cards */
+.stats-card {
+    background: linear-gradient(135deg, white 0%, var(--gray-50) 100%);
+    border-left: 4px solid var(--government-navy);
+    transition: all 0.3s ease;
+}
+
+.stats-card:hover {
+    border-left-color: var(--government-gold);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stats-card .card-body {
+    padding: 1.25rem 1.5rem;
+}
+
+.stats-value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--government-navy);
+    line-height: 1;
+}
+
+.stats-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* =============================================
+ * BUTTONS & INTERACTIONS
+ * ============================================= */
+
+.btn {
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    padding: 0.625rem 1.25rem;
+    transition: all 0.2s ease;
+    border: none;
+    font-size: 0.875rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--government-navy) 0%, #2563EB 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1e40af 0%, var(--government-navy) 100%);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-government {
+    background: linear-gradient(135deg, var(--government-gold) 0%, var(--government-light-gold) 100%);
+    color: var(--government-navy);
+    font-weight: 700;
+}
+
+.btn-government:hover {
+    background: linear-gradient(135deg, var(--government-light-gold) 0%, var(--government-gold) 100%);
+    color: var(--government-navy);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-outline-government {
+    border: 2px solid var(--government-navy);
+    color: var(--government-navy);
+    background: transparent;
+}
+
+.btn-outline-government:hover {
+    background-color: var(--government-navy);
+    color: white;
+}
+
+/* =============================================
+ * THREAT LEVEL INDICATORS
+ * ============================================= */
+
+.threat-critical {
+    background-color: var(--threat-critical) !important;
+    color: white !important;
+}
+
+.threat-high {
+    background-color: var(--threat-high) !important;
+    color: white !important;
+}
+
+.threat-medium {
+    background-color: var(--threat-medium) !important;
+    color: white !important;
+}
+
+.threat-low {
+    background-color: var(--threat-low) !important;
+    color: white !important;
+}
+
+.threat-info {
+    background-color: var(--threat-info) !important;
+    color: white !important;
+}
+
+/* Severity Badges with Icons */
+.severity-badge {
+    font-weight: 600;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* =============================================
+ * TABLES & DATA DISPLAY
+ * ============================================= */
+
+.table {
+    font-size: 0.9rem;
+}
+
+.table th {
+    background: linear-gradient(135deg, var(--government-navy) 0%, var(--government-deep-gray) 100%);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 1rem 0.75rem;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+.table td {
+    padding: 0.875rem 0.75rem;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background-color: var(--gray-50);
+}
+
+/* =============================================
+ * FORMS & INPUTS
+ * ============================================= */
+
+.form-control {
+    border: 2px solid var(--gray-300);
+    border-radius: var(--border-radius);
+    padding: 0.625rem 0.875rem;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--government-navy);
+    box-shadow: 0 0 0 3px rgba(27, 54, 93, 0.1);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 0.5rem;
+}
+
+/* =============================================
+ * ALERTS & NOTIFICATIONS
+ * ============================================= */
+
+.alert {
+    border: none;
+    border-radius: var(--border-radius-lg);
+    padding: 1rem 1.25rem;
+    border-left: 4px solid;
+}
+
+.alert-government {
+    background: linear-gradient(135deg, rgba(246, 173, 85, 0.1) 0%, rgba(253, 215, 170, 0.1) 100%);
+    border-left-color: var(--government-gold);
+    color: var(--government-navy);
+}
+
+.alert-threat {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
+    border-left-color: var(--threat-critical);
+    color: var(--threat-critical);
+}
+
+/* =============================================
+ * LOADING & ANIMATIONS
+ * ============================================= */
+
+.loading-spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 3px solid rgba(27, 54, 93, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--government-navy);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================
+ * SPECIALIZED COMPONENTS
+ * ============================================= */
+
+/* AI Chat Interface (Government Command Center Style) */
+.chat-container {
+    background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-xl);
+}
+
+.chat-header {
+    background: linear-gradient(135deg, var(--government-navy) 0%, var(--government-deep-gray) 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+}
+
+.chat-message {
+    animation: slideIn 0.3s ease-out;
+    margin-bottom: 1rem;
+}
+
+.chat-message.user {
+    text-align: right;
+}
+
+.chat-message.assistant {
+    text-align: left;
+}
+
+.message-bubble {
+    display: inline-block;
+    padding: 0.875rem 1.125rem;
+    border-radius: var(--border-radius-lg);
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.message-bubble.user {
+    background: linear-gradient(135deg, var(--government-navy) 0%, var(--government-deep-gray) 100%);
+    color: white;
+}
+
+.message-bubble.assistant {
+    background: linear-gradient(135deg, var(--gray-100) 0%, white 100%);
+    border: 1px solid var(--gray-200);
+    color: var(--gray-800);
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Dashboard Widgets */
+.dashboard-widget {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.dashboard-widget:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.widget-header {
+    background: linear-gradient(135deg, var(--government-navy) 0%, var(--government-deep-gray) 100%);
+    color: white;
+    padding: 1rem;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+.widget-content {
+    padding: 1.5rem;
+}
+
+/* Real-time Status Indicators */
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.status-dot.operational {
+    background-color: var(--status-operational);
+    animation: pulse-green 2s infinite;
+}
+
+.status-dot.degraded {
+    background-color: var(--status-degraded);
+    animation: pulse-yellow 2s infinite;
+}
+
+.status-dot.offline {
+    background-color: var(--status-offline);
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-yellow {
+    0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Progress Bars (Government Style) */
+.progress {
+    height: 8px;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--gray-200);
+}
+
+.progress-bar {
+    border-radius: var(--border-radius-sm);
+    transition: width 0.6s ease;
+}
+
+.progress-bar.threat-critical {
+    background: linear-gradient(90deg, var(--threat-critical) 0%, #f87171 100%);
+}
+
+.progress-bar.threat-high {
+    background: linear-gradient(90deg, var(--threat-high) 0%, #fb923c 100%);
+}
+
+.progress-bar.threat-medium {
+    background: linear-gradient(90deg, var(--threat-medium) 0%, #fbbf24 100%);
+}
+
+.progress-bar.threat-low {
+    background: linear-gradient(90deg, var(--threat-low) 0%, #34d399 100%);
+}
+
+/* Executive Summary Cards */
+.executive-card {
+    background: linear-gradient(135deg, white 0%, var(--gray-50) 100%);
+    border: 2px solid var(--government-navy);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.executive-card:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--government-gold);
+}
+
+.executive-number {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--government-navy);
+    line-height: 1;
+}
+
+.executive-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Scanner Status Panel */
+.scanner-panel {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+}
+
+.scanner-item {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.2s ease;
+}
+
+.scanner-item:hover {
+    background-color: var(--gray-50);
+}
+
+.scanner-item:last-child {
+    border-bottom: none;
+}
+
+.scanner-name {
+    font-weight: 600;
+    color: var(--government-navy);
+}
+
+.scanner-status {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* =============================================
+ * RESPONSIVE DESIGN
+ * ============================================= */
+
+/* Tablet Styles */
+@media (max-width: 992px) {
+    .brand-title {
+        font-size: 1.25rem;
+    }
+    
+    .brand-subtitle {
+        font-size: 0.7rem;
+    }
+    
+    .stats-value {
+        font-size: 1.875rem;
+    }
+    
+    .executive-card {
+        padding: 1.5rem;
+    }
+    
+    .executive-number {
+        font-size: 2.5rem;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    body {
+        font-size: 0.9rem;
+    }
+    
+    .navbar {
+        padding: 0.5rem 0;
+    }
+    
+    .brand-title {
+        font-size: 1.1rem;
+    }
+    
+    .brand-subtitle {
+        display: none;
+    }
+    
+    .agency-seal {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .card-body,
+    .widget-content {
+        padding: 1rem;
+    }
+    
+    .stats-value {
+        font-size: 1.5rem;
+    }
+    
+    .executive-card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .executive-number {
+        font-size: 2rem;
+    }
+    
+    .message-bubble {
+        max-width: 90%;
+    }
+    
+    .chat-message {
+        margin-bottom: 0.75rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.8rem;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 576px) {
+    .container-fluid {
+        padding: 0.75rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .card {
+        margin-bottom: 0.75rem;
+    }
+    
+    .stats-card .card-body {
+        padding: 1rem;
+    }
+}
+
+/* =============================================
+ * PRINT STYLES (Government Reports)
+ * ============================================= */
+
+@media print {
+    .classification-banner,
+    .navbar,
+    .breadcrumb,
+    footer,
+    .btn,
+    .dropdown {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+    
+    .card {
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+    }
+    
+    .card-header {
+        background: #f0f0f0 !important;
+        color: black !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: black !important;
+        page-break-after: avoid;
+    }
+    
+    .table th {
+        background: #f0f0f0 !important;
+        color: black !important;
+    }
+    
+    /* Add classification headers to printed pages */
+    @page {
+        margin: 1in;
+        @top-center {
+            content: "UNCLASSIFIED//FOR OFFICIAL USE ONLY";
+            font-weight: bold;
+            font-size: 10pt;
+        }
+        @bottom-center {
+            content: "UNCLASSIFIED//FOR OFFICIAL USE ONLY";
+            font-weight: bold;
+            font-size: 10pt;
+        }
+    }
+}

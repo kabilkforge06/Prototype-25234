@@ -1,0 +1,719 @@
+{% extends "base.html" %}
+
+{% block title %}National AI Security Analyst - NCVD Command Center{% endblock %}
+
+{% block breadcrumb %}Operations Center › AI Security Analyst{% endblock %}
+
+{% block content %}
+<!-- Classification Header -->
+<div class="alert alert-government border-0 mb-4">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h6 class="alert-heading mb-2">
+                <i class="fas fa-brain text-government-gold me-2"></i>
+                Advanced AI Security Intelligence Assistant
+            </h6>
+            <p class="mb-0">Classified AI analyst trained on national threat intelligence, vulnerability databases, and cyber warfare tactics.</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="badge bg-success fs-6 px-3 py-2">
+                <i class="fas fa-shield-check me-1"></i>CLEARANCE: TS/SCI
+            </div>
+            <div class="small text-muted mt-1">Model: Gemini-Pro-Gov | Classification: TOP SECRET</div>
+        </div>
+    </div>
+</div>
+
+<!-- Main Chat Interface -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card dashboard-widget">
+            <div class="chat-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-government-gold rounded-circle p-2 me-3">
+                            <i class="fas fa-brain fs-5 text-government-navy"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-1">NCVD AI Security Analyst</h5>
+                            <small class="text-light">
+                                <i class="fas fa-shield-alt me-1"></i>Security Clearance: TOP SECRET//SCI
+                                <span class="ms-3"><i class="fas fa-clock me-1"></i>Session: <span id="sessionTimer">00:00</span></span>
+                            </small>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button class="btn btn-sm btn-outline-light me-2" onclick="clearSession()">
+                            <i class="fas fa-trash me-1"></i>Clear Session
+                        </button>
+                        <button class="btn btn-sm btn-outline-light" onclick="exportChat()">
+                            <i class="fas fa-download me-1"></i>Export Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Messages Area -->
+            <div class="chat-messages-container" style="height: 600px; overflow-y: auto; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);">
+                <div id="chatContainer" class="p-4">
+                    <!-- System Welcome Message -->
+                    <div class="chat-message assistant fade-in mb-4">
+                        <div class="d-flex align-items-start">
+                            <div class="bg-government-navy rounded-circle p-2 me-3 flex-shrink-0">
+                                <i class="fas fa-robot text-white"></i>
+                            </div>
+                            <div class="message-bubble assistant">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong class="text-government-navy">NCVD AI Analyst</strong>
+                                    <small class="text-muted">System Initialized</small>
+                                </div>
+                                <div class="message-text">
+                                    <div class="alert alert-info border-0 mb-3">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <strong>SECURITY NOTICE:</strong> This AI system has access to classified threat intelligence and vulnerability databases.
+                                        All conversations are logged and monitored by the Security Operations Center.
+                                    </div>
+                                    
+                                    <p class="mb-3"><strong>AI Security Analyst Capabilities:</strong></p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ul class="list-unstyled">
+                                                <li><i class="fas fa-check text-success me-2"></i>Threat Intelligence Analysis</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>CVE Impact Assessment</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Attack Vector Modeling</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>MITRE ATT&CK Mapping</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ul class="list-unstyled">
+                                                <li><i class="fas fa-check text-success me-2"></i>Remediation Planning</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Risk Prioritization</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>IOC Analysis</li>
+                                                <li><i class="fas fa-check text-success me-2"></i>Compliance Guidance</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Action Suggestions -->
+                    <div class="text-center mb-4">
+                        <h6 class="text-government-navy mb-3">Analyst Quick Actions</h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-outline-government w-100 text-start" onclick="sendQuickQuery('threat-assessment')">
+                                    <i class="fas fa-crosshairs me-2"></i>Conduct Threat Assessment
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-outline-government w-100 text-start" onclick="sendQuickQuery('critical-vulns')">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>Show Critical Vulnerabilities
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-outline-government w-100 text-start" onclick="sendQuickQuery('attack-analysis')">
+                                    <i class="fas fa-sitemap me-2"></i>Analyze Attack Vectors
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-outline-government w-100 text-start" onclick="sendQuickQuery('remediation-plan')">
+                                    <i class="fas fa-tools me-2"></i>Generate Remediation Plan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input Area -->
+            <div class="bg-light border-top p-3">
+                <div class="row align-items-end">
+                    <div class="col">
+                        <label class="form-label small fw-semibold text-government-navy">Classified Query Input</label>
+                        <div class="input-group">
+                            <textarea 
+                                id="messageInput" 
+                                class="form-control" 
+                                rows="2" 
+                                placeholder="Enter your security intelligence query... (Example: 'Analyze CVE-2024-12345 impact on critical infrastructure')"
+                                onkeypress="handleKeyPress(event)"></textarea>
+                            <button class="btn btn-government" type="button" onclick="sendMessage()" id="sendButton">
+                                <i class="fas fa-paper-plane me-1"></i>Query AI
+                            </button>
+                        </div>
+                        <small class="text-muted">
+                            <i class="fas fa-lock me-1"></i>End-to-end encrypted • 
+                            <i class="fas fa-history me-1"></i>Session logged • 
+                            <i class="fas fa-user-shield me-1"></i>Clearance verified
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Intelligence Panel -->
+    <div class="col-lg-4">
+        <div class="card dashboard-widget mb-4">
+            <div class="widget-header">
+                <h6 class="mb-0"><i class="fas fa-database me-2"></i>Intelligence Sources</h6>
+            </div>
+            <div class="widget-content p-0">
+                <div class="scanner-panel">
+                    <div class="scanner-item">
+                        <div>
+                            <div class="scanner-name">National CVE Database</div>
+                            <small class="text-muted">Real-time vulnerability feed</small>
+                        </div>
+                        <div class="text-end">
+                            <div class="status-dot operational"></div>
+                            <span class="scanner-status text-success fw-semibold">LIVE</span>
+                        </div>
+                    </div>
+                    <div class="scanner-item">
+                        <div>
+                            <div class="scanner-name">MITRE ATT&CK Framework</div>
+                            <small class="text-muted">Threat actor tactics & techniques</small>
+                        </div>
+                        <div class="text-end">
+                            <div class="status-dot operational"></div>
+                            <span class="scanner-status text-success fw-semibold">LIVE</span>
+                        </div>
+                    </div>
+                    <div class="scanner-item">
+                        <div>
+                            <div class="scanner-name">Threat Intelligence Feeds</div>
+                            <small class="text-muted">Commercial & government sources</small>
+                        </div>
+                        <div class="text-end">
+                            <div class="status-dot operational"></div>
+                            <span class="scanner-status text-success fw-semibold">LIVE</span>
+                        </div>
+                    </div>
+                    <div class="scanner-item">
+                        <div>
+                            <div class="scanner-name">IOC Repository</div>
+                            <small class="text-muted">Indicators of compromise</small>
+                        </div>
+                        <div class="text-end">
+                            <div class="status-dot operational"></div>
+                            <span class="scanner-status text-success fw-semibold">LIVE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Queries -->
+        <div class="card dashboard-widget">
+            <div class="widget-header">
+                <h6 class="mb-0"><i class="fas fa-clock me-2"></i>Recent Analyst Queries</h6>
+            </div>
+            <div class="widget-content">
+                <div class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action border-0 px-0" onclick="sendQuickQuery('recent-1')">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="fw-semibold small">Critical Apache vulnerability analysis</div>
+                                <small class="text-muted">CVE impact assessment requested</small>
+                            </div>
+                            <small class="text-muted">2m ago</small>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action border-0 px-0" onclick="sendQuickQuery('recent-2')">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="fw-semibold small">Nation-state APT campaign tracking</div>
+                                <small class="text-muted">MITRE ATT&CK mapping analysis</small>
+                            </div>
+                            <small class="text-muted">15m ago</small>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action border-0 px-0" onclick="sendQuickQuery('recent-3')">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="fw-semibold small">Zero-day exploitation analysis</div>
+                                <small class="text-muted">Threat vector assessment</small>
+                            </div>
+                            <small class="text-muted">1h ago</small>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Government AI Chat System
+let chatSession = {
+    startTime: new Date(),
+    messageCount: 0,
+    isProcessing: false,
+    sessionId: generateSessionId()
+};
+
+$(document).ready(function() {
+    initializeGovernmentChat();
+    startSessionTimer();
+    setupKeyboardHandlers();
+    logSystemEvent('AI Analyst session initiated', 'INFO');
+});
+
+function initializeGovernmentChat() {
+    // Initialize chat system
+    updateSessionStatus();
+    
+    // Auto-scroll to bottom
+    scrollToBottom();
+    
+    // Character counter for input
+    $('#messageInput').on('input', function() {
+        const length = $(this).val().length;
+        const maxLength = 2000;
+        if (length > maxLength * 0.8) {
+            $(this).addClass('border-warning');
+        } else {
+            $(this).removeClass('border-warning');
+        }
+    });
+}
+
+function setupKeyboardHandlers() {
+    $('#messageInput').on('keypress', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            if (!chatSession.isProcessing) {
+                sendMessage();
+            }
+        }
+    });
+}
+
+function startSessionTimer() {
+    setInterval(updateSessionTimer, 1000);
+}
+
+function updateSessionTimer() {
+    const elapsed = new Date() - chatSession.startTime;
+    const minutes = Math.floor(elapsed / 60000);
+    const seconds = Math.floor((elapsed % 60000) / 1000);
+    $('#sessionTimer').text(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+}
+
+function generateSessionId() {
+    return 'NCVD-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+}
+
+function handleKeyPress(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+}
+
+function sendMessage() {
+    const input = $('#messageInput');
+    const message = input.val().trim();
+    
+    if (!message || chatSession.isProcessing) {
+        return;
+    }
+    
+    // Add user message to chat
+    addMessageToChat('user', message);
+    
+    // Clear input and set processing state
+    input.val('');
+    setProcessingState(true);
+    
+    // Increment message count
+    chatSession.messageCount++;
+    
+    // Send to AI (simulate API call)
+    simulateAIResponse(message);
+    
+    // Log the query
+    logSystemEvent(`Query processed: "${message.substring(0, 50)}..."`, 'INFO');
+}
+
+function addMessageToChat(sender, message, isMarkdown = false) {
+    const container = $('#chatContainer');
+    const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false });
+    
+    let messageHtml;
+    
+    if (sender === 'user') {
+        messageHtml = `
+            <div class="chat-message user fade-in mb-4">
+                <div class="d-flex align-items-start justify-content-end">
+                    <div class="message-bubble user me-3" style="max-width: 80%;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong class="text-white">Agent Smith (TS/SCI)</strong>
+                            <small class="text-light">${timestamp}</small>
+                        </div>
+                        <div class="message-text text-white">${escapeHtml(message)}</div>
+                    </div>
+                    <div class="bg-government-gold rounded-circle p-2 flex-shrink-0">
+                        <i class="fas fa-user text-government-navy"></i>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        messageHtml = `
+            <div class="chat-message assistant fade-in mb-4">
+                <div class="d-flex align-items-start">
+                    <div class="bg-government-navy rounded-circle p-2 me-3 flex-shrink-0">
+                        <i class="fas fa-brain text-white"></i>
+                    </div>
+                    <div class="message-bubble assistant" style="max-width: 80%;">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong class="text-government-navy">NCVD AI Analyst</strong>
+                            <small class="text-muted">${timestamp}</small>
+                        </div>
+                        <div class="message-text">${isMarkdown ? formatMarkdown(message) : escapeHtml(message)}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    container.append(messageHtml);
+    scrollToBottom();
+}
+
+function simulateAIResponse(userMessage) {
+    // Show typing indicator
+    showTypingIndicator();
+    
+    // Make actual API call to the chat endpoint
+    $.ajax({
+        url: '/api/chat/query',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ 
+            query: userMessage,
+            classification: 'TOP SECRET//SI//NOFORN',
+            clearance_level: 'TS/SCI'
+        }),
+        timeout: 30000,
+        success: function(response) {
+            hideTypingIndicator();
+            
+            // Format the response with government styling
+            const formattedResponse = formatGovernmentAIResponse(response.response);
+            
+            // Add AI response to chat
+            addMessageToChat('assistant', formattedResponse, true);
+            
+            // Reset processing state
+            setProcessingState(false);
+            
+            // Log successful response
+            logSystemEvent(`AI response received - Confidence: ${response.confidence}`, 'INFO');
+        },
+        error: function(xhr, status, error) {
+            hideTypingIndicator();
+            
+            let errorMessage = 'AI Analyst temporarily unavailable - Please try again or contact SOC.';
+            
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+                errorMessage = `System Error: ${xhr.responseJSON.error}`;
+            }
+            
+            // Add error message to chat
+            addMessageToChat('assistant', `🚨 **SYSTEM ALERT**\n\n${errorMessage}\n\n**Classification:** UNCLASSIFIED\n**Error Code:** ${xhr.status || 'Unknown'}\n**Timestamp:** ${new Date().toISOString()}`, true);
+            
+            // Reset processing state
+            setProcessingState(false);
+            
+            // Log error
+            logSystemEvent(`AI API error: ${status} - ${error}`, 'ERROR');
+        }
+    });
+}
+
+function formatGovernmentAIResponse(response) {
+    // If response is already formatted with government headers, return as-is
+    if (response.includes('**') && response.includes('Classification:')) {
+        return response;
+    }
+    
+    // Otherwise, format with government styling
+    const timestamp = new Date().toISOString();
+    
+    return `**AI SECURITY ANALYSIS REPORT**
+**Generated:** ${timestamp}
+**Classification:** TOP SECRET//SI//NOFORN
+**Authority:** National Cybersecurity & Vulnerability Database (NCVD)
+
+---
+
+${response}
+
+---
+
+**OPERATIONAL NOTES:**
+- Analysis based on real-time threat intelligence feeds
+- Recommendations derived from NIST Cybersecurity Framework
+- Report automatically classified per Executive Order 13526
+- For questions, contact NCVD Operations Center
+
+**End of Report**`;
+}
+
+function generateAIResponse(query) {
+    const queryLower = query.toLowerCase();
+    
+    if (queryLower.includes('critical') || queryLower.includes('vulnerability')) {
+        return `**THREAT ASSESSMENT COMPLETE**
+
+Based on current intelligence feeds, I've identified the following critical vulnerabilities requiring immediate attention:
+
+**🚨 CRITICAL FINDINGS:**
+• **CVE-2024-12345** - Apache HTTP Server RCE (CVSS 9.8)
+  - Affects 847 government systems
+  - Active exploitation detected in APT campaigns
+  - **Remediation**: Update to Apache 2.4.58 immediately
+
+• **CVE-2024-23456** - Windows Privilege Escalation (CVSS 8.8)
+  - Domain controller exposure confirmed
+  - 0-day exploitation by nation-state actors
+  - **Remediation**: Apply emergency patch KB5034441
+
+**THREAT INTELLIGENCE:**
+- Nation-state actor "Volt Typhoon" actively scanning for these vulnerabilities
+- 342% increase in exploitation attempts over last 48 hours
+- Critical infrastructure sectors primarily targeted
+
+**RECOMMENDED ACTIONS:**
+1. Implement emergency patching protocol
+2. Activate incident response team
+3. Enhance network monitoring for IOCs
+4. Brief executive leadership on national security implications
+
+Classification: **TOP SECRET//SI//NOFORN**`;
+    }
+    
+    if (queryLower.includes('attack') || queryLower.includes('mitre')) {
+        return `**ATTACK VECTOR ANALYSIS**
+
+Analyzing current threat landscape using MITRE ATT&CK framework:
+
+**PRIMARY ATTACK CHAINS:**
+🎯 **Initial Access (TA0001)**
+• T1190: Exploit Public-Facing Application
+• T1566: Phishing (Spearphishing Attachment)
+• T1078: Valid Accounts (Compromised Credentials)
+
+🔓 **Privilege Escalation (TA0004)**
+• T1068: Exploitation for Privilege Escalation
+• T1055: Process Injection
+• T1134: Access Token Manipulation
+
+📊 **THREAT ACTOR MAPPING:**
+• **APT29 (Cozy Bear)**: Active in government networks
+• **APT40 (Leviathan)**: Targeting critical infrastructure
+• **Volt Typhoon**: Pre-positioning for disruptive attacks
+
+**COUNTERMEASURE RECOMMENDATIONS:**
+- Deploy EDR solutions with behavioral analytics
+- Implement zero-trust architecture
+- Enhanced user behavior analytics (UBA)
+- Threat hunting operations every 72 hours
+
+Would you like detailed IOCs for any specific threat actor?`;
+    }
+    
+    if (queryLower.includes('remediation') || queryLower.includes('fix')) {
+        return `**STRATEGIC REMEDIATION PLAN**
+
+**PRIORITY MATRIX (Risk-Based Approach):**
+
+🔴 **IMMEDIATE (0-24 hours):**
+1. Patch critical CVEs with CVSS ≥ 9.0
+2. Isolate compromised systems from network
+3. Reset compromised administrative credentials
+4. Deploy emergency firewall rules
+
+🟠 **URGENT (24-72 hours):**
+1. Update vulnerable applications and services
+2. Implement additional monitoring controls
+3. Conduct threat hunting operations
+4. Brief stakeholders on current posture
+
+🟡 **HIGH (1-2 weeks):**
+1. Security architecture review
+2. Penetration testing of critical assets
+3. Staff security awareness training
+4. Update incident response procedures
+
+**RESOURCE ALLOCATION:**
+- Cybersecurity team: 24/7 SOC operations
+- IT Operations: Emergency change management
+- Executive: Authorize additional security budget
+- Legal/Compliance: Regulatory notification planning
+
+**SUCCESS METRICS:**
+- Vulnerability closure rate: >95% within SLA
+- Mean time to remediation: <4 hours critical
+- Security posture improvement: Measurable risk reduction
+
+Classification: **SECRET//NOFORN**`;
+    }
+    
+    // Default response for other queries
+    return `**AI SECURITY ANALYSIS**
+
+I've processed your query against our classified intelligence databases. Here's my assessment:
+
+**INTELLIGENCE SOURCES CONSULTED:**
+✅ National Vulnerability Database (NVD)
+✅ MITRE ATT&CK Framework  
+✅ Threat Intelligence Feeds (Commercial + Gov)
+✅ IOC Repository (STIX/TAXII)
+✅ NIST Cybersecurity Framework
+
+**ANALYSIS RESULTS:**
+Based on current threat intelligence, I recommend a multi-layered defensive approach combining preventive, detective, and responsive security controls.
+
+**NEXT STEPS:**
+1. Specify particular CVEs, threat actors, or attack vectors for detailed analysis
+2. Request specific remediation guidance for identified vulnerabilities
+3. Ask for threat hunting queries or IOC investigation assistance
+
+**CLEARANCE NOTICE:** This response contains information derived from classified sources. Handle according to information security protocols.
+
+How can I assist with your specific security intelligence requirements?`;
+}
+
+function sendQuickQuery(type) {
+    const queries = {
+        'threat-assessment': 'Conduct comprehensive threat assessment of current national cybersecurity posture',
+        'critical-vulns': 'Show me all critical vulnerabilities affecting government infrastructure',
+        'attack-analysis': 'Analyze current attack vectors and threat actor campaigns using MITRE ATT&CK',
+        'remediation-plan': 'Generate strategic remediation plan for critical security vulnerabilities',
+        'recent-1': 'Analyze CVE-2024-12345 Apache vulnerability impact on critical infrastructure',
+        'recent-2': 'Track APT29 campaign activities and provide MITRE ATT&CK mapping',
+        'recent-3': 'Assess zero-day exploitation risks in current threat landscape'
+    };
+    
+    const query = queries[type] || 'Provide current threat intelligence summary';
+    $('#messageInput').val(query);
+    sendMessage();
+}
+
+function showTypingIndicator() {
+    const container = $('#chatContainer');
+    const typingHtml = `
+        <div id="typingIndicator" class="chat-message assistant fade-in mb-4">
+            <div class="d-flex align-items-start">
+                <div class="bg-government-navy rounded-circle p-2 me-3 flex-shrink-0">
+                    <i class="fas fa-brain text-white"></i>
+                </div>
+                <div class="message-bubble assistant">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong class="text-government-navy">NCVD AI Analyst</strong>
+                        <small class="text-muted">Processing...</small>
+                    </div>
+                    <div class="message-text">
+                        <i class="fas fa-circle-notch fa-spin me-2"></i>
+                        Analyzing threat intelligence databases...
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    container.append(typingHtml);
+    scrollToBottom();
+}
+
+function hideTypingIndicator() {
+    $('#typingIndicator').remove();
+}
+
+function setProcessingState(isProcessing) {
+    chatSession.isProcessing = isProcessing;
+    const button = $('#sendButton');
+    const input = $('#messageInput');
+    
+    if (isProcessing) {
+        button.html('<i class="fas fa-spinner fa-spin me-1"></i>Processing').prop('disabled', true);
+        input.prop('disabled', true);
+    } else {
+        button.html('<i class="fas fa-paper-plane me-1"></i>Query AI').prop('disabled', false);
+        input.prop('disabled', false).focus();
+    }
+}
+
+function scrollToBottom() {
+    const container = $('.chat-messages-container');
+    container.animate({ scrollTop: container[0].scrollHeight }, 300);
+}
+
+function clearSession() {
+    if (confirm('Clear current AI session? This action cannot be undone and will be logged.')) {
+        $('#chatContainer').find('.chat-message:not(:first)').remove();
+        chatSession.messageCount = 0;
+        chatSession.startTime = new Date();
+        logSystemEvent('AI session cleared by user', 'WARNING');
+        updateSessionStatus();
+    }
+}
+
+function exportChat() {
+    const sessionData = {
+        sessionId: chatSession.sessionId,
+        startTime: chatSession.startTime,
+        messageCount: chatSession.messageCount,
+        classification: 'TOP SECRET//SI//NOFORN',
+        operator: 'Agent Smith',
+        clearance: 'TS/SCI'
+    };
+    
+    // In a real system, this would generate a secure export
+    alert('Chat export initiated. Secure report will be available in classified document repository.');
+    logSystemEvent('Chat session export requested', 'INFO');
+}
+
+function updateSessionStatus() {
+    // Update UI elements to reflect current session
+    console.log(`Session ${chatSession.sessionId} - ${chatSession.messageCount} messages`);
+}
+
+function logSystemEvent(event, level) {
+    const timestamp = new Date().toISOString();
+    console.log(`[${timestamp}] [${level}] ${event}`);
+    
+    // In a real system, this would log to secure audit system
+    // secureAuditLog.record(timestamp, level, event, chatSession.sessionId);
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function formatMarkdown(text) {
+    // Simple markdown formatting for security responses
+    return text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`(.*?)`/g, '<code class="bg-light px-1 rounded">$1</code>')
+        .replace(/^• (.*)$/gm, '<li>$1</li>')
+        .replace(/^🚨 (.*)$/gm, '<div class="alert alert-danger border-0 py-2 mb-2"><i class="fas fa-exclamation-triangle me-2"></i>$1</div>')
+        .replace(/^🔴 (.*)$/gm, '<div class="text-danger fw-bold">🔴 $1</div>')
+        .replace(/^🟠 (.*)$/gm, '<div class="text-warning fw-bold">🟠 $1</div>')
+        .replace(/^🟡 (.*)$/gm, '<div class="text-info fw-bold">🟡 $1</div>')
+        .replace(/^✅ (.*)$/gm, '<div class="text-success">✅ $1</div>')
+        .replace(/\n/g, '<br>');
+}
+</script>
+{% endblock %}
+

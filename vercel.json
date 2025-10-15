@@ -1,0 +1,19 @@
+{
+  "name": "cvd-detect",
+  "version": 2,
+  "builds": [
+    {
+      "src": "App.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/App.py"
+    }
+  ],
+  "env": {
+    "FLASK_ENV": "production"
+  }
+}
